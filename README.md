@@ -1,4 +1,4 @@
-# gulp-smoosher [![NPM version][npm-image]][npm-url] [![Build status][travis-image]][travis-url]
+# gulp-smoosher [![Build Status](https://travis-ci.org/gabrielflorit/gulp-smoosher.png?branch=master)](https://travis-ci.org/gabrielflorit/gulp-smoosher)
 > Replaces css and js links with file contents
 
 ## Install
@@ -66,9 +66,3 @@ If you use [grunt](http://gruntjs.com) instead of gulp, but want to perform a si
 ## License
 
 MIT © [Gabriel Florit](http://gabrielflor.it)
-
-[travis-url]: https://travis-ci.org/gabrielflorit/gulp-smoosher
-[travis-image]: https://travis-ci.org/gabrielflorit/gulp-smoosher.png
-[npm-url]: https://npmjs.org/package/gulp-smoosher
-[npm-image]: https://badge.fury.io/js/gulp-smoosher.png
-
