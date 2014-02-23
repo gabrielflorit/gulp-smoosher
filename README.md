@@ -1,2 +1,2 @@
-# gulp-smoosher [![Build Status](https://travis-ci.org/gabrielflorit/gulp-smoosher.png)](https://travis-ci.org/gabrielflorit/gulp-smoosher)
+# gulp-smoosher [![NPM version][npm-image]][npm-url] [![Build status][travis-image]][travis-url]
 > Replaces css and js links with file contents
