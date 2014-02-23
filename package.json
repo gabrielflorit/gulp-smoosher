@@ -10,7 +10,10 @@
   "keywords": [
     "gulpplugin"
   ],
-  "author": "Gabriel Florit",
+  "author": {
+    "name": "Gabriel Florit",
+    "url": "http://gabrielflor.it"
+  },  
   "license": "MIT",
   "dependencies": {
     "gulp-util": "~2.2.14",
