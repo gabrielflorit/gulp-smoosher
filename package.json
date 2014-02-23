@@ -1,0 +1,23 @@
+{
+  "name": "gulp-smoosher",
+  "version": "0.0.1",
+  "description": "Replaces css and js links with file contents",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "keywords": [
+    "gulpplugin"
+  ],
+  "author": "Gabriel Florit",
+  "license": "MIT",
+  "dependencies": {
+    "gulp-util": "~2.2.14",
+    "through2": "~0.4.1",
+    "cheerio": "~0.13.1",
+    "gulp-replace": "~0.2.0"
+  },
+  "devDependencies": {
+    "mocha": "~1.17.1"
+  }
+}
