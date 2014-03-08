@@ -44,8 +44,8 @@ module.exports = function() {
 				$('script').each(function(index, element) {
 					var src = $(element).attr('src');
 					if(isLocal(src)) {
-						$(element).attr('src', '')
-							.text(fs.readFileSync(path.join(file.base, src)));
+						delete element.attribs.src;
+						$(element).text(fs.readFileSync(path.join(file.base, src)));
 					}
 				});
 
