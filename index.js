@@ -39,18 +39,14 @@ module.exports = function() {
 				$('link').each(function(index, element) {
 					var href = $(element).attr('href');
 					if(isLocal(href)) {
-						var el = $('<style></style>').text('tmp');
-						$(element).replaceWith(el);
-						el[0].children[0].data = fs.readFileSync(path.join(file.base, href), 'utf8');
+						$(element).replaceWith('<style>' + fs.readFileSync(path.join(file.base, href), 'utf8') + '</style>');
 					}
 				});
 
 				$('script').each(function(index, element) {
 					var src = $(element).attr('src');
 					if(isLocal(src)) {
-						delete element.attribs.src;
-						$(element).text('tmp');
-						element.children[0].data = fs.readFileSync(path.join(file.base, src), 'utf8');
+						$(element).replaceWith('<script>' + fs.readFileSync(path.join(file.base, src), 'utf8') + '</script>');
 					}
 				});
 
