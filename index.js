@@ -33,12 +33,12 @@ module.exports = function() {
 
 				$('link').each(function(index, element) {
 					var href = $(element).attr('href');
-					$(element).replaceWith('<style>' + fs.readFileSync(path.join(file.base, href), 'utf8') + '</style>');
+					href && $(element).replaceWith('<style>' + fs.readFileSync(path.join(file.base, href), 'utf8') + '</style>');
 				});
 
 				$('script').each(function(index, element) {
 					var src = $(element).attr('src');
-					$(element).replaceWith('<script>' + fs.readFileSync(path.join(file.base, src), 'utf8') + '</script>');
+					src && $(element).replaceWith('<script>' + fs.readFileSync(path.join(file.base, src), 'utf8') + '</script>');
 				});
 
 				return $.html();
