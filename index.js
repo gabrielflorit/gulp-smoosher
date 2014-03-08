@@ -5,6 +5,11 @@ var cheerio = require('cheerio');
 var replace = require('gulp-replace');
 var fs      = require('fs');
 var path    = require('path');
+var url     = require('url');
+
+function isLocal(link) {
+	return link && ! url.parse(link).hostname;
+}
 
 module.exports = function() {
 
@@ -33,12 +38,20 @@ module.exports = function() {
 
 				$('link').each(function(index, element) {
 					var href = $(element).attr('href');
-					$(element).replaceWith('<style>' + fs.readFileSync(path.join(file.base, href), 'utf8') + '</style>');
+					if(isLocal(href)) {
+						var el = $('<style></style>').text('tmp');
+						$(element).replaceWith(el);
+						el[0].children[0].data = fs.readFileSync(path.join(file.base, href), 'utf8');
+					}
 				});
 
 				$('script').each(function(index, element) {
 					var src = $(element).attr('src');
-					$(element).replaceWith('<script>' + fs.readFileSync(path.join(file.base, src), 'utf8') + '</script>');
+					if(isLocal(src)) {
+						delete element.attribs.src;
+						$(element).text('tmp');
+						element.children[0].data = fs.readFileSync(path.join(file.base, src), 'utf8');
+					}
 				});
 
 				return $.html();

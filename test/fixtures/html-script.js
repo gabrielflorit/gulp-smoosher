@@ -1,0 +1,2 @@
+/* <select>*/
+var str = 'test';
