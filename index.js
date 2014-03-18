@@ -39,7 +39,13 @@ module.exports = function() {
 				$('link').each(function(index, element) {
 					var href = $(element).attr('href');
 					if (isLocal(href)) {
-						$(element).replaceWith('<style>' + fs.readFileSync(path.join(file.base, href), 'utf8') + '</style>');
+						var rel = $(element).attr('rel');
+						if (rel == 'import')
+							$(element).replaceWith(fs.readFileSync(path.join(file.base, href), 'utf8'));
+
+						else
+							$(element).replaceWith('<style>' + fs.readFileSync(path.join(file.base, href), 'utf8') + '</style>');
+
 					}
 				});
 
