@@ -51,7 +51,7 @@ module.exports = function() {
 				});
 
 				return $.html();
-			}).replace(/<!-- smoosh -->\n|<!-- endsmoosh -->\n/g, '');
+			}).replace(/([ ]*)<!-- smoosh -->([ ]*)(\n?)|([ ]*)<!-- endsmoosh -->([ ]*)(\n?)/g, '');
 
 			file.contents = new Buffer(output);
 
