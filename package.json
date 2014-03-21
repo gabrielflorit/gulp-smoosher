@@ -1,6 +1,6 @@
 {
   "name": "gulp-smoosher",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Replaces css and js links with file contents",
   "main": "index.js",
   "scripts": {
