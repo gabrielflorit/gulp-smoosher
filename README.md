@@ -57,6 +57,42 @@ gulp.task('default', function () {
 ...
 ```
 
+## Options
+
+Pass in custom js/css tags, if so desired. Example:
+
+```js
+var gulp = require('gulp');
+var smoosher = require('gulp-smoosher');
+
+gulp.task('default', function () {
+	gulp.src('index.html')
+		.pipe(smoosher({
+			cssTags: {
+				begin: '<p:style>',
+				end: '</p:style>'
+			},
+			jsTags: {
+				begin: '<p:script>',
+				end: '</p:script>'
+			}
+		}))
+		.pipe(gulp.dest('dist'));
+});
+```
+
+will result in the following:
+
+```html
+<html>
+	<head>
+		<p:style>body {
+			background: red;
+		}</p:style>
+		<p:script>alert('Hello world!');</p:script>
+	</head>
+...
+```
 
 ## Notes
 
