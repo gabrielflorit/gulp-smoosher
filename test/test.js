@@ -28,41 +28,42 @@ describe('gulp-smoosher', function() {
 
 		});
 
+		it('should skip non-local urls', function(done) {
+			var filename = path.join(__dirname, '/fixtures/remote.html');
+
+			var input = new gutil.File({
+				base: path.dirname(filename),
+				path: filename,
+				contents: new Buffer(fs.readFileSync(filename, 'utf8'))
+			});
+
+			var stream = smoosher();
+			stream.on('data', function(newFile) {
+				assert.equal(String(newFile.contents), fs.readFileSync(path.join(__dirname, '/fixtures/remote-output.html'), 'utf8'));
+				done();
+			});
+
+			stream.write(input);
+		});
+
+		it('should support scripts that contain html strings', function(done) {
+			var filename = path.join(__dirname, '/fixtures/html-script.html');
+
+			var input = new gutil.File({
+				base: path.dirname(filename),
+				path: filename,
+				contents: new Buffer(fs.readFileSync(filename, 'utf8'))
+			});
+
+			var stream = smoosher();
+			stream.on('data', function(newFile) {
+				assert.equal(String(newFile.contents), fs.readFileSync(path.join(__dirname, '/fixtures/html-script-output.html'), 'utf8'));
+				done();
+			});
+
+			stream.write(input);
+		});
+
 	});
 
-	it('should skip non-local urls', function(done) {
-		var filename = path.join(__dirname, '/fixtures/remote.html');
-
-		var input = new gutil.File({
-			base: path.dirname(filename),
-			path: filename,
-			contents: new Buffer(fs.readFileSync(filename, 'utf8'))
-		});
-
-		var stream = smoosher();
-		stream.on('data', function(newFile) {
-			assert.equal(String(newFile.contents), fs.readFileSync(path.join(__dirname, '/fixtures/remote-output.html'), 'utf8'));
-			done();
-		});
-
-		stream.write(input);
-	});
-
-	it('should support scripts that contain html strings', function(done) {
-		var filename = path.join(__dirname, '/fixtures/html-script.html');
-
-		var input = new gutil.File({
-			base: path.dirname(filename),
-			path: filename,
-			contents: new Buffer(fs.readFileSync(filename, 'utf8'))
-		});
-
-		var stream = smoosher();
-		stream.on('data', function(newFile) {
-			assert.equal(String(newFile.contents), fs.readFileSync(path.join(__dirname, '/fixtures/html-script-output.html'), 'utf8'));
-			done();
-		});
-
-		stream.write(input);
-	});
 });
