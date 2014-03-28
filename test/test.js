@@ -22,7 +22,7 @@ describe('gulp-smoosher', function() {
 			stream.on('data', function(newFile) {
 				assert.equal(String(newFile.contents), fs.readFileSync(path.join(__dirname, '/fixtures/output.html'), 'utf8'));
 				done();
-			})
+			});
 
 			stream.write(input);
 
@@ -62,6 +62,36 @@ describe('gulp-smoosher', function() {
 			});
 
 			stream.write(input);
+		});
+
+		it('should support custom tags', function(done) {
+
+			var filename = path.join(__dirname, '/fixtures/input.html');
+
+			var input = new gutil.File({
+				base: path.dirname(filename),
+				path: filename,
+				contents: new Buffer(fs.readFileSync(filename, 'utf8'))
+			});
+
+			var stream = smoosher({
+				cssTags: {
+					begin: '<p:style>',
+					end: '</p:style>'
+				},
+				jsTags: {
+					begin: '<p:script>',
+					end: '</p:script>'
+				}
+			});
+
+			stream.on('data', function(newFile) {
+				assert.equal(String(newFile.contents), fs.readFileSync(path.join(__dirname, '/fixtures/output-customtags.html'), 'utf8'));
+				done();
+			});
+
+			stream.write(input);
+
 		});
 
 	});
