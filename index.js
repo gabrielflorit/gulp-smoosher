@@ -31,7 +31,7 @@ module.exports = function(options) {
 
 		if (file.isBuffer()) {
 
-			var rePattern = /<!-- smoosh -->([\s\S]*?)<!-- endsmoosh -->/g;
+			var rePattern = /<!--(| )smoosh(| )-->([\s\S]*?)<!--(| )endsmoosh(| )-->/g;
 
 			var input = String(file.contents);
 
@@ -54,7 +54,7 @@ module.exports = function(options) {
 				});
 
 				return $.html();
-			}).replace(/([ ]*)<!-- smoosh -->([ ]*)(\n?)|([ ]*)<!-- endsmoosh -->([ ]*)(\n?)/g, '');
+			}).replace(/([ ]*)<!--(| )smoosh(| )-->([ ]*)(\n?)|([ ]*)<!--(| )endsmoosh(| )-->([ ]*)(\n?)/g, '');
 
 			file.contents = new Buffer(output);
 
