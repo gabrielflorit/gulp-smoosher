@@ -13,17 +13,18 @@ var url          = require('url');
 // Reusable regular expression snippets.
 var anythingLazy = '([\\s\\S]*?)';
 var spaces = '( *)';
+var spacesLazy = '( *?)';
 var optionalNewline = '(\n?)';
-var startSmoosh = ['<!--', anythingLazy, 'smoosh', anythingLazy, '-->'].join('');
-var endSmoosh = ['<!--', anythingLazy, 'endsmoosh', anythingLazy, '-->'].join('');
+var startSmoosh = ['<!--', spacesLazy, 'smoosh', spacesLazy, '-->'].join('');
+var endSmoosh = ['<!--', spacesLazy, 'endsmoosh', spacesLazy, '-->'].join('');
 
 // Used to replace anything within startSmoosh and endSmoosh.
 var replaceRegExp = new RegExp([startSmoosh, anythingLazy, endSmoosh].join(''), 'g');
 
 // Used to remove startSmooshs and endSmooshs.
 var removeRegExp = new RegExp([
-	[spaces, startSmoosh, spaces, optionalNewline].join(''),
-	[spaces, endSmoosh, spaces, optionalNewline].join('')
+	[spacesLazy, startSmoosh, spaces, optionalNewline].join(''),
+	[spacesLazy, endSmoosh, spaces, optionalNewline].join('')
 ].join('|'), 'g');
 
 function isLocal(link) {
