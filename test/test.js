@@ -1,3 +1,6 @@
+// -*- indent-tabs-mode: t; -*-
+
+'use strict';
 var assert   = require('assert');
 var gutil    = require('gulp-util');
 var smoosher = require('../index');
@@ -18,6 +21,29 @@ describe('gulp-smoosher', function() {
 			});
 
 			var stream = smoosher();
+
+			stream.on('data', function(newFile) {
+				assert.equal(String(newFile.contents), fs.readFileSync(path.join(__dirname, '/fixtures/output.html'), 'utf8'));
+				done();
+			});
+
+			stream.write(input);
+
+		});
+
+		it('should use a custom base directory', function(done) {
+
+			var filename = path.join(__dirname, '/fixtures/input.html');
+
+			var input = new gutil.File({
+				base: path.dirname(filename),
+				path: filename,
+				contents: new Buffer(fs.readFileSync(filename, 'utf8'))
+			});
+
+			var stream = smoosher({
+				base: path.join(__dirname, '/fixtures/base/')
+			});
 
 			stream.on('data', function(newFile) {
 				assert.equal(String(newFile.contents), fs.readFileSync(path.join(__dirname, '/fixtures/output.html'), 'utf8'));

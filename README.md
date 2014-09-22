@@ -94,6 +94,19 @@ will result in the following:
 ...
 ```
 
+Say your `index.html` is still in your `src/` directory and files you intend to smoosh are already written to your `dist/`. In this case, specify a custom `base` to resolve your files from.
+
+```js
+gulp.task('default', ['minifyCss', 'uglifyJs'], function () {
+	gulp.src('src/index.html')
+		.pipe(smoosher({
+			base: 'dist'
+		}))
+		.pipe(gulp.dest('dist'));
+});
+```
+
+
 ## Notes
 
 If you use [grunt](http://gruntjs.com) instead of gulp, but want to perform a similar task, use [grunt-html-smoosher](https://github.com/motherjones/grunt-html-smoosher).

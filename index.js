@@ -1,3 +1,5 @@
+// -*- indent-tabs-mode: t; -*-
+
 'use strict';
 var gutil   = require('gulp-util');
 var through = require('through2');
@@ -15,6 +17,7 @@ module.exports = function(options) {
 
 	var cssTags = options && options.cssTags ? options.cssTags : {begin: '<style>', end: '</style>'};
 	var jsTags = options && options.jsTags ? options.jsTags : {begin: '<script>', end: '</script>'};
+	var base = options && options.base;
 
 	// create a stream through which each file will pass
 	return through.obj(function(file, enc, callback) {
@@ -42,14 +45,14 @@ module.exports = function(options) {
 				$('link').each(function(index, element) {
 					var href = $(element).attr('href');
 					if (isLocal(href)) {
-						$(element).replaceWith(cssTags.begin + fs.readFileSync(path.join(file.base, href), 'utf8') + cssTags.end);
+						$(element).replaceWith(cssTags.begin + fs.readFileSync(path.join(base || file.base, href), 'utf8') + cssTags.end);
 					}
 				});
 
 				$('script').each(function(index, element) {
 					var src = $(element).attr('src');
 					if (isLocal(src)) {
-						$(element).replaceWith(jsTags.begin + fs.readFileSync(path.join(file.base, src), 'utf8') + jsTags.end);
+						$(element).replaceWith(jsTags.begin + fs.readFileSync(path.join(base || file.base, src), 'utf8') + jsTags.end);
 					}
 				});
 
