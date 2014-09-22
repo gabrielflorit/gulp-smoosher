@@ -6,7 +6,6 @@ var asyncReplace = require('async-replace');
 var gutil        = require('gulp-util');
 var through      = require('through2');
 var cheerio      = require('cheerio');
-var replace      = require('gulp-replace');
 var fs           = require('fs');
 var path         = require('path');
 var url          = require('url');
