@@ -11,6 +11,22 @@ var fs           = require('fs');
 var path         = require('path');
 var url          = require('url');
 
+// Reusable regular expression snippets.
+var anythingLazy = '([\\s\\S]*?)';
+var spaces = '( *)';
+var optionalNewline = '(\n?)';
+var startSmoosh = ['<!--', anythingLazy, 'smoosh', anythingLazy, '-->'].join('');
+var endSmoosh = ['<!--', anythingLazy, 'endsmoosh', anythingLazy, '-->'].join('');
+
+// Used to replace anything within startSmoosh and endSmoosh.
+var replaceRegExp = new RegExp([startSmoosh, anythingLazy, endSmoosh].join(''), 'g');
+
+// Used to remove startSmooshs and endSmooshs.
+var removeRegExp = new RegExp([
+	[spaces, startSmoosh, spaces, optionalNewline].join(''),
+	[spaces, endSmoosh, spaces, optionalNewline].join('')
+].join('|'), 'g');
+
 function isLocal(link) {
 	return link && ! url.parse(link).hostname;
 }
@@ -36,13 +52,11 @@ module.exports = function(options) {
 
 		if (file.isBuffer()) {
 
-			var rePattern = /<!--(| )smoosh(| )-->([\s\S]*?)<!--(| )endsmoosh(| )-->/g;
-
 			var input = String(file.contents);
 
 			var readFileBase = base !== undefined ? base : file.base;
 
-			asyncReplace(input, rePattern, function(match) {
+			asyncReplace(input, replaceRegExp, function(match) {
 
 				// Last argument to asyncReplace is always the callback.
 				var callback = Array.prototype.slice.call(arguments).pop();
@@ -96,7 +110,7 @@ module.exports = function(options) {
 					return callback(error);
 				}
 
-				output = output.replace(/([ ]*)<!--(| )smoosh(| )-->([ ]*)(\n?)|([ ]*)<!--(| )endsmoosh(| )-->([ ]*)(\n?)/g, '');
+				output = output.replace(removeRegExp, '');
 
 				file.contents = new Buffer(output);
 
