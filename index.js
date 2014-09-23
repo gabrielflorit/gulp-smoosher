@@ -1,6 +1,5 @@
-// -*- indent-tabs-mode: t; -*-
-
 'use strict';
+
 var async        = require('async');
 var asyncReplace = require('async-replace');
 var gutil        = require('gulp-util');
@@ -21,7 +20,7 @@ var endSmoosh = ['<!--', spacesLazy, 'endsmoosh', spacesLazy, '-->'].join('');
 // Used to replace anything within startSmoosh and endSmoosh.
 var replaceRegExp = new RegExp([startSmoosh, anythingLazy, endSmoosh].join(''), 'g');
 
-// Used to remove startSmooshs and endSmooshs.
+// Used to remove startSmooshes and endSmooshes.
 var removeRegExp = new RegExp([
 	[spacesLazy, startSmoosh, spaces, optionalNewline].join(''),
 	[spacesLazy, endSmoosh, spaces, optionalNewline].join('')
@@ -56,7 +55,7 @@ module.exports = function(options) {
 
 			var readFileBase = base !== undefined ? base : file.base;
 
-			asyncReplace(input, replaceRegExp, function(match) {
+			asyncReplace(input, replaceRegExp, function replacer(match) {
 
 				// Last argument to asyncReplace is always the callback.
 				var callback = Array.prototype.slice.call(arguments).pop();

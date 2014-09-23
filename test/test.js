@@ -1,6 +1,5 @@
-// -*- indent-tabs-mode: t; -*-
-
 'use strict';
+
 var assert   = require('assert');
 var gutil    = require('gulp-util');
 var smoosher = require('../index');
