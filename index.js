@@ -9,22 +9,11 @@ var fs           = require('fs');
 var path         = require('path');
 var url          = require('url');
 
-// Reusable regular expression snippets.
-var anythingLazy = '([\\s\\S]*?)';
-var spaces = '( *)';
-var spacesLazy = '( *?)';
-var optionalNewline = '(\n?)';
-var startSmoosh = ['<!--', spacesLazy, 'smoosh', spacesLazy, '-->'].join('');
-var endSmoosh = ['<!--', spacesLazy, 'endsmoosh', spacesLazy, '-->'].join('');
+// Used to replace anything within a start and end tag.
+var replaceRegExp = /<!--\s*?smoosh\s*?-->[\s\S]*?<!--\s*?endsmoosh\s*?-->/g;
 
-// Used to replace anything within startSmoosh and endSmoosh.
-var replaceRegExp = new RegExp([startSmoosh, anythingLazy, endSmoosh].join(''), 'g');
-
-// Used to remove startSmooshes and endSmooshes.
-var removeRegExp = new RegExp([
-	[spacesLazy, startSmoosh, spaces, optionalNewline].join(''),
-	[spacesLazy, endSmoosh, spaces, optionalNewline].join('')
-].join('|'), 'g');
+// Used to remove start and end tags.
+var removeRegExp = / *?<!--\s*?smoosh\s*?--> *\n?| *?<!--\s*?endsmoosh\s*?--> *\n?/g;
 
 function isLocal(link) {
 	return link && ! url.parse(link).hostname;
