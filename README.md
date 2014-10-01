@@ -111,6 +111,11 @@ gulp.task('default', ['minifyCss', 'uglifyJs'], function () {
 
 If you use [grunt](http://gruntjs.com) instead of gulp, but want to perform a similar task, use [grunt-html-smoosher](https://github.com/motherjones/grunt-html-smoosher).
 
+## Contributors
+
+- Gabriel Florit
+- Andrew Shaffer
+- Jackson Ray Hamilton
 
 ## License
 
