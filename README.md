@@ -119,4 +119,4 @@ If you use [grunt](http://gruntjs.com) instead of gulp, but want to perform a si
 
 ## License
 
-MIT © [Gabriel Florit](http://gabrielflor.it)
+MIT © [Gabriel Florit](http://gabrielflorit.github.io/)
