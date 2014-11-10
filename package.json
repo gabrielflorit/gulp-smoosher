@@ -8,7 +8,10 @@
   },
   "repository": "https://github.com/gabrielflorit/gulp-smoosher.git",
   "keywords": [
-    "gulpplugin"
+    "gulpplugin",
+    "inline",
+    "css",
+    "javascript"
   ],
   "author": {
     "name": "Gabriel Florit",
