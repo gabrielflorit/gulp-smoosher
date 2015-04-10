@@ -5,6 +5,7 @@ var asyncReplace = require('async-replace');
 var gutil        = require('gulp-util');
 var through      = require('through2');
 var cheerio      = require('cheerio');
+var CleanCSS      = require('clean-css');
 var fs           = require('fs');
 var path         = require('path');
 var url          = require('url');
@@ -23,6 +24,7 @@ module.exports = function(options) {
 
 	var cssTags = options && options.cssTags ? options.cssTags : {begin: '<style>', end: '</style>'};
 	var jsTags = options && options.jsTags ? options.jsTags : {begin: '<script>', end: '</script>'};
+    var minify = options && options.minify ? options.minify : false;
 	var base = options && options.base;
 
 	// create a stream through which each file will pass
@@ -99,6 +101,10 @@ module.exports = function(options) {
 				}
 
 				output = output.replace(removeRegExp, '');
+
+                if (options.minify) {
+                    output = new CleanCSS().minify(output).styles;
+                }
 
 				file.contents = new Buffer(output);
 
