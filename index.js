@@ -1,5 +1,6 @@
 'use strict';
 
+var _            = require('lodash');
 var async        = require('async');
 var asyncReplace = require('async-replace');
 var gutil        = require('gulp-util');
@@ -47,7 +48,7 @@ module.exports = function(options) {
 			asyncReplace(input, replaceRegExp, function replacer(match) {
 
 				// Last argument to asyncReplace is always the callback.
-				var callback = Array.prototype.slice.call(arguments).pop();
+				var callback = _.values(arguments).pop();
 
 				var $ = cheerio.load(match);
 
@@ -60,12 +61,21 @@ module.exports = function(options) {
 					var $element = $(element);
 					var url;
 					var tags;
+
+					// use this to save <script attributes>
+					var attrs;
+
 					if ($element.is('link')) {
+
 						url = $element.attr('href');
 						tags = cssTags;
+						attrs = {};
+
 					} else if ($element.is('script')) {
+
 						url = $element.attr('src');
 						tags = jsTags;
+						attrs = _.omit($element.attr(), 'src');
 					}
 
 					if (isLocal(url)) {
@@ -74,7 +84,16 @@ module.exports = function(options) {
 								return callback(error);
 							}
 
-							$(element).replaceWith(tags.begin + data + tags.end);
+							var newElement = $(tags.begin + data + tags.end);
+
+							_.forEach(attrs, function(value, key) {
+
+								newElement.attr(key, value);
+
+							});
+
+							$(element).replaceWith(newElement);
+
 							callback(null);
 						});
 					} else {

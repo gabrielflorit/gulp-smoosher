@@ -23,6 +23,7 @@
     "async-replace": "^1.0.0",
     "cheerio": "~0.13.1",
     "gulp-util": "~2.2.14",
+    "lodash": "^3.10.1",
     "through2": "~0.4.1"
   },
   "devDependencies": {
