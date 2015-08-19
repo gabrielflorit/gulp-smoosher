@@ -16,7 +16,7 @@ var replaceRegExp = /<!--\s*?smoosh\s*?-->[\s\S]*?<!--\s*?endsmoosh\s*?-->/g;
 var removeRegExp = / *?<!--\s*?smoosh\s*?--> *\n?| *?<!--\s*?endsmoosh\s*?--> *\n?/g;
 
 function isLocal(link) {
-	return link && ! url.parse(link).hostname;
+	return link && !url.parse(link).hostname;
 }
 
 module.exports = function(options) {
@@ -63,7 +63,8 @@ module.exports = function(options) {
 				async.each(elements, function iterator(element, callback) {
 
 					var $element = $(element);
-					var url, tags;
+					var url;
+					var tags;
 					if ($element.is('link')) {
 						url = $element.attr('href');
 						tags = cssTags;
@@ -71,11 +72,13 @@ module.exports = function(options) {
 						url = $element.attr('src');
 						tags = jsTags;
 					}
+
 					if (isLocal(url)) {
 						fs.readFile(path.join(readFileBase, url), function onRead(error, data) {
 							if (error) {
 								return callback(error);
 							}
+
 							$(element).replaceWith(tags.begin + data + tags.end);
 							callback(null);
 						});
@@ -88,6 +91,7 @@ module.exports = function(options) {
 					if (error) {
 						return callback(error);
 					}
+
 					// "Return" the replacement for asyncReplace.
 					callback(null, $.html());
 				});
