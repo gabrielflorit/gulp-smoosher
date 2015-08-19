@@ -51,12 +51,7 @@ module.exports = function(options) {
 
 				var $ = cheerio.load(match);
 
-				// Reduce replaceable elements to an array so we can iterate over them.
-				var elements = [$('link'), $('script')].map(function toArray(elements) {
-					return Array.prototype.slice.call(elements);
-				}).reduce(function flatten(a, b) {
-					return a.concat(b);
-				});
+				var elements = $('link, script');
 
 				// Asynchronously replace the contents of each element in this
 				// comment block.
