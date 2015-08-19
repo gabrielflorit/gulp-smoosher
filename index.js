@@ -84,8 +84,10 @@ module.exports = function(options) {
 								return callback(error);
 							}
 
+							// create the new link/script element
 							var newElement = $(tags.begin + data + tags.end);
 
+							// port over the old script attributes (e.g. id, type, class, etc)
 							_.forEach(attrs, function(value, key) {
 
 								newElement.attr(key, value);
