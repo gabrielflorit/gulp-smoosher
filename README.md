@@ -59,6 +59,7 @@ gulp.task('default', function () {
 
 ## Options
 
+### Custom js/css tags
 Pass in custom js/css tags, if so desired. Example:
 
 ```js
@@ -93,7 +94,7 @@ will result in the following:
 	</head>
 ...
 ```
-
+### Custom `base` dir
 Say your `index.html` is still in your `src/` directory and files you intend to smoosh are already written to your `dist/`. In this case, specify a custom `base` to resolve your files from.
 
 ```js
