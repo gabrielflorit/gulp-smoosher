@@ -22,9 +22,9 @@ function isLocal(link) {
 
 module.exports = function(options) {
 
-	var cssTags = options && options.cssTags ? options.cssTags : {begin: '<style>', end: '</style>'};
-	var jsTags = options && options.jsTags ? options.jsTags : {begin: '<script>', end: '</script>'};
-	var base = options && options.base;
+	var cssTags             = options && options.cssTags ? options.cssTags : {begin: '<style>', end: '</style>'};
+	var jsTags              = options && options.jsTags ? options.jsTags : {begin: '<script>', end: '</script>'};
+	var base                = options && options.base;
 	var ignoreFilesNotFound = options && options.ignoreFilesNotFound;
 
 	// create a stream through which each file will pass
@@ -85,10 +85,15 @@ module.exports = function(options) {
 							var isToIgnoreError = error && ignoreFilesNotFound && error.code === 'ENOENT';
 
 							if(isToIgnoreError) {
+
 								callback(null);
+
 							} else if(error) {
+
 								callback(error);
+
 							} else {
+
 								// create the new link/script element
 								var newElement = $(tags.begin + data + tags.end);
 								// port over the old script attributes (e.g. id, type, class, etc)
