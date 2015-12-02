@@ -25,6 +25,7 @@ module.exports = function(options) {
 	var cssTags = options && options.cssTags ? options.cssTags : {begin: '<style>', end: '</style>'};
 	var jsTags = options && options.jsTags ? options.jsTags : {begin: '<script>', end: '</script>'};
 	var base = options && options.base;
+	var ignoreNotFoundFiles = options && options.ignoreNotFoundFiles;
 
 	// create a stream through which each file will pass
 	return through.obj(function(file, enc, callback) {
@@ -80,21 +81,24 @@ module.exports = function(options) {
 
 					if (isLocal(url)) {
 						fs.readFile(path.join(readFileBase, url), function onRead(error, data) {
-							if (error) {
+
+							var isToIgnoreError = error && ignoreNotFoundFiles && error.code === 'ENOENT';
+
+							if (error  && !isToIgnoreError ) {
 								return callback(error);
+							} else if (!error) {
+								// create the new link/script element
+								var newElement = $(tags.begin + data + tags.end);
+
+								// port over the old script attributes (e.g. id, type, class, etc)
+								_.forEach(attrs, function (value, key) {
+
+									newElement.attr(key, value);
+
+								});
+
+								$(element).replaceWith(newElement);
 							}
-
-							// create the new link/script element
-							var newElement = $(tags.begin + data + tags.end);
-
-							// port over the old script attributes (e.g. id, type, class, etc)
-							_.forEach(attrs, function(value, key) {
-
-								newElement.attr(key, value);
-
-							});
-
-							$(element).replaceWith(newElement);
 
 							callback(null);
 						});
