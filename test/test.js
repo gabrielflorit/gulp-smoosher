@@ -119,8 +119,8 @@ describe('gulp-smoosher', function() {
 
 		});
 
-		it('should ignore files not found with the option "ignoreNotFoundFiles" activated', function(done){
-			var filename = path.join(__dirname, '/fixtures/input-ignore-not-found-files.html');
+		it('should ignore files not found with the option "ignoreFilesNotFound" activated', function(done){
+			var filename = path.join(__dirname, '/fixtures/input-ignore-files-not-found.html');
 
 			var input = new gutil.File({
 				base: path.dirname(filename),
@@ -129,11 +129,11 @@ describe('gulp-smoosher', function() {
 			});
 
 			var stream = smoosher({
-				ignoreNotFoundFiles: true
+				ignoreFilesNotFound: true
 			});
 
 			stream.on('data', function(newFile) {
-				assert.equal(String(newFile.contents), fs.readFileSync(path.join(__dirname, '/fixtures/output-ignore-not-found-files.html'), 'utf8'));
+				assert.equal(String(newFile.contents), fs.readFileSync(path.join(__dirname, '/fixtures/output-ignore-files-not-found.html'), 'utf8'));
 				done();
 			});
 

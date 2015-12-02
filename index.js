@@ -25,7 +25,7 @@ module.exports = function(options) {
 	var cssTags = options && options.cssTags ? options.cssTags : {begin: '<style>', end: '</style>'};
 	var jsTags = options && options.jsTags ? options.jsTags : {begin: '<script>', end: '</script>'};
 	var base = options && options.base;
-	var ignoreNotFoundFiles = options && options.ignoreNotFoundFiles;
+	var ignoreFilesNotFound = options && options.ignoreFilesNotFound;
 
 	// create a stream through which each file will pass
 	return through.obj(function(file, enc, callback) {
@@ -82,7 +82,7 @@ module.exports = function(options) {
 					if (isLocal(url)) {
 						fs.readFile(path.join(readFileBase, url), function onRead(error, data) {
 
-							var isToIgnoreError = error && ignoreNotFoundFiles && error.code === 'ENOENT';
+							var isToIgnoreError = error && ignoreFilesNotFound && error.code === 'ENOENT';
 
 							if (error  && !isToIgnoreError ) {
 								return callback(error);
