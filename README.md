@@ -107,6 +107,19 @@ gulp.task('default', ['minifyCss', 'uglifyJs'], function () {
 });
 ```
 
+### Ignore files not found
+When the option `ignoreFilesNotFound` is true the plugin will keep running even if it finds a nonexistent file
+
+```js
+gulp.task('default', function () {
+	gulp.src('src/index.html')
+		.pipe(smoosher({
+			ignoreFilesNotFound: true
+		}))
+		.pipe(gulp.dest('dist'));
+});
+```
+
 
 ## Notes
 
