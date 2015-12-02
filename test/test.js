@@ -119,6 +119,27 @@ describe('gulp-smoosher', function() {
 
 		});
 
+		it('should ignore files not found with the option "ignoreFilesNotFound" activated', function(done){
+			var filename = path.join(__dirname, '/fixtures/input-ignore-files-not-found.html');
+
+			var input = new gutil.File({
+				base: path.dirname(filename),
+				path: filename,
+				contents: new Buffer(fs.readFileSync(filename, 'utf8'))
+			});
+
+			var stream = smoosher({
+				ignoreFilesNotFound: true
+			});
+
+			stream.on('data', function(newFile) {
+				assert.equal(String(newFile.contents), fs.readFileSync(path.join(__dirname, '/fixtures/output-ignore-files-not-found.html'), 'utf8'));
+				done();
+			});
+
+			stream.write(input);
+		})
+
 	});
 
 });

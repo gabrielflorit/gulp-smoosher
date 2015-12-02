@@ -25,6 +25,7 @@ module.exports = function(options) {
 	var cssTags = options && options.cssTags ? options.cssTags : {begin: '<style>', end: '</style>'};
 	var jsTags = options && options.jsTags ? options.jsTags : {begin: '<script>', end: '</script>'};
 	var base = options && options.base;
+	var ignoreFilesNotFound = options && options.ignoreFilesNotFound;
 
 	// create a stream through which each file will pass
 	return through.obj(function(file, enc, callback) {
@@ -80,23 +81,28 @@ module.exports = function(options) {
 
 					if (isLocal(url)) {
 						fs.readFile(path.join(readFileBase, url), function onRead(error, data) {
-							if (error) {
-								return callback(error);
+
+							var isToIgnoreError = error && ignoreFilesNotFound && error.code === 'ENOENT';
+
+							if(isToIgnoreError) {
+								callback(null);
+							} else if(error) {
+								callback(error);
+							} else {
+								// create the new link/script element
+								var newElement = $(tags.begin + data + tags.end);
+								// port over the old script attributes (e.g. id, type, class, etc)
+								_.forEach(attrs, function (value, key) {
+
+									newElement.attr(key, value);
+
+								});
+
+								$(element).replaceWith(newElement);
+
+								callback(error);
 							}
 
-							// create the new link/script element
-							var newElement = $(tags.begin + data + tags.end);
-
-							// port over the old script attributes (e.g. id, type, class, etc)
-							_.forEach(attrs, function(value, key) {
-
-								newElement.attr(key, value);
-
-							});
-
-							$(element).replaceWith(newElement);
-
-							callback(null);
 						});
 					} else {
 						callback(null);
