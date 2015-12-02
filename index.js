@@ -84,12 +84,13 @@ module.exports = function(options) {
 
 							var isToIgnoreError = error && ignoreFilesNotFound && error.code === 'ENOENT';
 
-							if (error  && !isToIgnoreError ) {
-								return callback(error);
-							} else if (!error) {
+							if(isToIgnoreError) {
+								callback(null);
+							} else if(error) {
+								callback(error);
+							} else {
 								// create the new link/script element
 								var newElement = $(tags.begin + data + tags.end);
-
 								// port over the old script attributes (e.g. id, type, class, etc)
 								_.forEach(attrs, function (value, key) {
 
@@ -98,9 +99,10 @@ module.exports = function(options) {
 								});
 
 								$(element).replaceWith(newElement);
+
+								callback(error);
 							}
 
-							callback(null);
 						});
 					} else {
 						callback(null);
