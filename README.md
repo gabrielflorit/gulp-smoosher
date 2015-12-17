@@ -130,6 +130,7 @@ If you use [grunt](http://gruntjs.com) instead of gulp, but want to perform a si
 - Gabriel Florit
 - Andrew Shaffer
 - Jackson Ray Hamilton
+- lneves12
 
 ## License
 
