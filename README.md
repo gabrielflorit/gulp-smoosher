@@ -23,7 +23,7 @@ npm install --save-dev gulp-smoosher
 	</head>
 ...
 ```
-**Make sure to wrap the tags you want to be imported with the 'smoosh' and 'endsmoosh' comments**.
+**NOTE:** Make sure to wrap the tags you want to be imported with the `smoosh` and `endsmoosh` comments.
 
 ### `styles.css`
 
